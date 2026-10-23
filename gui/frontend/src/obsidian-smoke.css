@@ -172,3 +172,140 @@ body.theme-obsidian .crt-roll { display: none !important; }
   body.theme-obsidian .game { margin: 0; padding: 4px; border-radius: 0 !important; }
   body.theme-obsidian .sidebar { padding: 8px; }
 }
+
+/* Phase 3 — immersive glass treatment, keeping TEC text and map unobstructed. */
+body.theme-obsidian {
+  --smoke-edge: rgba(229,223,212,.32);
+  --smoke-shadow: 0 14px 38px rgba(0,0,0,.34);
+  --fg: #e8e9eb;
+  --fg-dim: #a8a9ad;
+  background:
+    radial-gradient(ellipse 32% 46% at 73% 9%,rgba(238,207,171,.29),transparent 80%),
+    radial-gradient(ellipse 23% 34% at 11% 80%,rgba(185,122,76,.28),transparent 84%),
+    radial-gradient(ellipse 60% 24% at 40% 48%,rgba(159,164,164,.14),transparent 95%),
+    radial-gradient(ellipse 48% 70% at 94% 65%,rgba(68,77,85,.37),transparent 95%),
+    linear-gradient(125deg,#070809,#1b2024 42%,#090a0d);
+}
+body.theme-obsidian .game {
+  background: linear-gradient(132deg,rgba(237,231,220,.115),rgba(15,19,23,.36) 20%,rgba(13,17,21,.48) 74%,rgba(211,173,130,.1));
+  border-color: rgba(243,235,222,.38);
+  box-shadow: inset 0 1px rgba(255,255,255,.34),inset 1px 0 rgba(255,255,255,.08),0 20px 55px rgba(0,0,0,.45);
+}
+body.theme-obsidian .statusbar,
+body.theme-obsidian .tabbar,
+body.theme-obsidian .sidebar,
+body.theme-obsidian .inputbar,
+body.theme-obsidian .automation-bar {
+  background: linear-gradient(135deg,rgba(181,181,180,.19),rgba(33,39,45,.64) 22%,rgba(15,18,23,.73) 68%,rgba(180,147,110,.12));
+  border: 1px solid rgba(226,221,214,.34);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.27),inset 0 -1px rgba(255,255,255,.035),0 9px 24px rgba(0,0,0,.2);
+  backdrop-filter: blur(24px) saturate(125%);
+  -webkit-backdrop-filter: blur(24px) saturate(125%);
+}
+body.theme-obsidian .statusbar { gap: 12px; }
+body.theme-obsidian .statusbar .bars { gap: 16px; }
+body.theme-obsidian .statusbar .bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0;
+  font-family: var(--font);
+  font-size: 12px;
+}
+body.theme-obsidian .statusbar .bar .bracket,
+body.theme-obsidian .statusbar .bar .filled,
+body.theme-obsidian .statusbar .bar .empty { display: none; }
+body.theme-obsidian .statusbar .bar .num { margin-left: 0; font-variant-numeric: tabular-nums; }
+.glass-meter { display: none; }
+body.theme-obsidian .glass-meter {
+  display: inline-block;
+  position: relative;
+  width: clamp(30px,6vw,82px);
+  height: 10px;
+  border-radius: 999px !important;
+  border: 1px solid rgba(224,225,225,.25);
+  background: rgba(0,0,0,.52);
+  box-shadow: inset 0 1px 4px rgba(0,0,0,.65);
+  overflow: hidden;
+}
+body.theme-obsidian .glass-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px !important;
+  box-shadow: inset 0 2px 2px rgba(255,255,255,.42),0 0 8px currentColor;
+  transition: width .22s ease-out;
+}
+body.theme-obsidian .sidebar {
+  background: linear-gradient(135deg,rgba(188,185,179,.16),rgba(19,24,30,.66) 32%,rgba(13,17,22,.78));
+}
+body.theme-obsidian .sidebar .navigation { gap: 10px; }
+body.theme-obsidian .sidebar :is(.mapbox,.compassbox,.gauges,.sidebartabs) {
+  background: linear-gradient(150deg,rgba(194,194,191,.13),rgba(13,16,21,.47) 50%,rgba(98,90,82,.1));
+  border: 1px solid rgba(225,220,212,.22);
+  box-shadow: inset 0 1px rgba(255,255,255,.15),0 7px 15px rgba(0,0,0,.16);
+}
+body.theme-obsidian .sidebar .mapbox {
+  background: radial-gradient(circle at 50% 45%,rgba(70,79,87,.2),rgba(7,10,14,.67) 76%);
+  padding: 8px;
+}
+body.theme-obsidian .sidebar .compassbox { padding: 6px; }
+body.theme-obsidian .sidebar .gauges { padding: 10px 4px; }
+body.theme-obsidian .sidebar .track {
+  width: 15px;
+  height: 56px;
+  border-radius: 5px !important;
+  overflow: hidden;
+  border-color: rgba(228,225,221,.23);
+}
+body.theme-obsidian .sidebar .fill { border-radius: 3px !important; }
+body.theme-obsidian .sidebar .strip { gap: 4px; }
+body.theme-obsidian .sidebar .strip .tab {
+  border-radius: 8px !important;
+  border: 1px solid transparent;
+  font-family: var(--font);
+  font-size: 12px;
+}
+body.theme-obsidian .sidebar .strip .tab.on {
+  color: #f0cf9f;
+  border-color: rgba(223,183,130,.38);
+  background: linear-gradient(160deg,rgba(205,162,108,.28),rgba(66,51,38,.12));
+}
+body.theme-obsidian .sidebar .content button,
+body.theme-obsidian .vertical-controls button {
+  border: 1px solid rgba(226,223,216,.24);
+  border-radius: 8px !important;
+  background: linear-gradient(160deg,rgba(180,184,190,.16),rgba(23,27,33,.72));
+  box-shadow: inset 0 1px rgba(255,255,255,.18);
+}
+body.theme-obsidian .output {
+  background: linear-gradient(135deg,rgba(10,13,17,.93),rgba(9,12,16,.82));
+  border-color: rgba(224,220,214,.29);
+}
+body.theme-obsidian .automation-bar {
+  border-radius: 12px !important;
+  margin-top: 4px;
+}
+body.theme-obsidian .inputbar textarea {
+  background: rgba(5,8,12,.58);
+  border-color: rgba(230,220,209,.3);
+  border-radius: 8px !important;
+  box-shadow: inset 0 1px 6px rgba(0,0,0,.48);
+}
+body.theme-obsidian .inputbar textarea:focus {
+  border-color: rgba(234,191,137,.75);
+  box-shadow: 0 0 0 2px rgba(234,191,137,.12),inset 0 1px 6px rgba(0,0,0,.48);
+}
+body.theme-obsidian .tabbar .tab.active {
+  background: linear-gradient(155deg,rgba(244,212,171,.86),rgba(153,112,74,.82));
+  box-shadow: inset 0 1px rgba(255,255,255,.4),0 2px 12px rgba(216,162,103,.2);
+}
+@media (max-width:599px) {
+  body.theme-obsidian .statusbar .glass-meter { display: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  body.theme-obsidian :is(.statusbar,.tabbar,.sidebar,.inputbar,.automation-bar) {
+    background: #1b2026;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
