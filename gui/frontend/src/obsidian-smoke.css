@@ -1,5 +1,5 @@
-/* Optional Obsidian Smoke appearance. Classic remains the default.
-   Scope all changes to the body class so the TUI palette is unaffected. */
+/* Obsidian Smoke — optional Wails/web theme. Classic stays unchanged.
+   Glass is applied to chrome, not the scrolling text renderer. */
 body.theme-obsidian {
   --bg: #0b0d10;
   --bg-panel: #14181d;
@@ -9,50 +9,97 @@ body.theme-obsidian {
   --border: #46505a;
   --border-bright: #73808c;
   --fg: #e5e8eb;
-  --fg-dim: #9ba5af;
+  --fg-dim: #a3acb5;
   --accent: #d5a65e;
   --accent-dim: #98713a;
-  background: radial-gradient(ellipse at 80% 5%, #313941 0%, transparent 52%),
-    radial-gradient(ellipse at 10% 90%, #28231f 0%, transparent 55%), #0b0d10;
+  --smoke-edge: rgba(195,207,217,.2);
+  --smoke-glint: inset 0 1px 0 rgba(255,255,255,.15);
+  --smoke-shadow: 0 10px 28px rgba(0,0,0,.3);
+  background: radial-gradient(ellipse at 85% 8%,#313941 0%,transparent 53%),
+    radial-gradient(ellipse at 12% 90%,#28231f 0%,transparent 57%),#0b0d10;
 }
 body.theme-obsidian #app { background: transparent; }
-body.theme-obsidian .game { padding: 6px; gap: 5px; }
+body.theme-obsidian .game { padding: 6px; gap: 6px; }
+body.theme-obsidian .game .body { gap: 6px; }
+/* Status and tabs are glass; output remains near-opaque for text legibility. */
+body.theme-obsidian .statusbar,
 body.theme-obsidian .tabbar,
-body.theme-obsidian .game .body > .main,
-body.theme-obsidian .game .body > :not(.main),
-body.theme-obsidian .game .body > .main > :not(.input-line) {
-  border: 1px solid rgba(195, 207, 217, .18);
-  background: linear-gradient(125deg, rgba(62, 70, 79, .43), rgba(15, 19, 24, .93) 48%, rgba(35, 39, 44, .78));
-  box-shadow: inset 0 1px rgba(255,255,255,.13), 0 10px 25px rgba(0,0,0,.24);
+body.theme-obsidian .sidebar,
+body.theme-obsidian .inputbar {
+  border: 1px solid var(--smoke-edge);
+  background: linear-gradient(125deg,rgba(65,73,82,.58),rgba(17,21,26,.92) 48%,rgba(40,44,49,.8));
+  box-shadow: var(--smoke-glint),var(--smoke-shadow);
+  backdrop-filter: blur(14px) saturate(112%);
+  -webkit-backdrop-filter: blur(14px) saturate(112%);
 }
-body.theme-obsidian .tabbar { backdrop-filter: blur(14px) saturate(110%); }
-body.theme-obsidian .game .body > .main { overflow: hidden; }
-body.theme-obsidian .game .body > .main > :not(.input-line) {
-  /* Keep game text readable: no translucent imagery directly behind text. */
-  background: rgba(8, 11, 15, .94);
-  box-shadow: none;
+body.theme-obsidian .game .body > .main { min-height: 0; min-width: 0; }
+body.theme-obsidian .output {
+  background: rgba(8,11,15,.97);
+  border: 1px solid var(--smoke-edge);
+  box-shadow: var(--smoke-glint);
+  min-height: 0;
 }
-body.theme-obsidian :is(button, input, textarea, select) {
-  border-color: rgba(195,207,217,.25);
+body.theme-obsidian .sidebar {
+  border-left: 1px solid var(--smoke-edge);
+  gap: 12px;
 }
-body.theme-obsidian button:hover { filter: brightness(1.13); }
+body.theme-obsidian .sidebar :is(.mapbox,.compassbox,.navigation,.gauges,.sidebartabs,.content) {
+  border-color: var(--smoke-edge);
+}
+body.theme-obsidian .sidebar :is(.mapbox,.compassbox,.gauges,.sidebartabs) {
+  background: linear-gradient(155deg,rgba(77,85,94,.2),rgba(10,13,17,.4));
+  box-shadow: var(--smoke-glint);
+}
+body.theme-obsidian .sidebar .track {
+  background: #242a30;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.6);
+}
+body.theme-obsidian .sidebar .fill {
+  box-shadow: 0 0 6px rgba(255,255,255,.08);
+}
+body.theme-obsidian :is(button,input,textarea,select) {
+  border-color: rgba(195,207,217,.26);
+}
+body.theme-obsidian button:hover:not(:disabled) { filter: brightness(1.12); }
 body.theme-obsidian .tabbar .tab.active {
   background: linear-gradient(180deg,#e0b574,#9b6a31);
   color: #101115;
+  box-shadow: inset 0 1px rgba(255,255,255,.3);
 }
 body.theme-obsidian .tabbar .theme-toggle {
-  color: #d5a65e;
-  border: 1px solid rgba(213,166,94,.4);
+  color: #e0b574;
+  border: 1px solid rgba(213,166,94,.45);
   margin: 1px 5px;
   font-size: 12px;
+  white-space: nowrap;
 }
-body.theme-obsidian :is(.tabbar, .game .body > .main, .game .body > :not(.main), button, input, select, textarea) {
-  border-radius: 8px !important;
+body.theme-obsidian :is(.statusbar,.tabbar,.sidebar,.output,.inputbar,.sidebar .mapbox,.sidebar .compassbox,.sidebar .gauges,.sidebar .sidebartabs) {
+  border-radius: 9px !important;
 }
-body.theme-obsidian .tabbar .tab { border-radius: 6px !important; }
+body.theme-obsidian :is(.tabbar .tab,.sidebar button,.inputbar button) {
+  border-radius: 6px !important;
+}
+body.theme-obsidian .inputbar :is(input,textarea) {
+  background: rgba(4,7,10,.75);
+  color: var(--fg);
+}
+@media (max-width:899px) {
+  body.theme-obsidian .game { padding: 3px; gap: 3px; }
+  body.theme-obsidian .game .body { gap: 3px; }
+  body.theme-obsidian .statusbar,
+  body.theme-obsidian .tabbar,
+  body.theme-obsidian .inputbar { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  body.theme-obsidian :is(.statusbar,.tabbar,.sidebar,.inputbar) {
+    background: #171c22;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
-  body.theme-obsidian *, body.theme-obsidian *::before, body.theme-obsidian *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+  body.theme-obsidian *,body.theme-obsidian *::before,body.theme-obsidian *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
   }
 }
