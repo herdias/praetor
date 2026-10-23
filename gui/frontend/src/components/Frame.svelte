@@ -28,7 +28,7 @@
   }
 </script>
 
-<div class="frame" class:collapsed={collapsible && collapsed}>
+<div class="frame" data-panel={title.toLowerCase()} class:collapsed={collapsible && collapsed}>
   {#if collapsible}
     <button
       class="frame-title frame-toggle"
