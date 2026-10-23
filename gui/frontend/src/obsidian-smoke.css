@@ -309,3 +309,120 @@ body.theme-obsidian .tabbar .tab.active {
     -webkit-backdrop-filter: none;
   }
 }
+
+/* Phase 4: Frame is now a true floating game card in Glass mode. Classic
+   retains the original terminal frame. */
+body.theme-obsidian .sidebar {
+  border: 0;
+  padding: 0 2px 2px;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  gap: 12px;
+}
+body.theme-obsidian .sidebar .navigation { gap: 12px; }
+body.theme-obsidian .sidebar .frame {
+  position: relative;
+  border: 1px solid rgba(239,229,216,.38);
+  border-radius: 16px !important;
+  padding: 35px 12px 12px;
+  background: linear-gradient(138deg,rgba(223,217,206,.22),rgba(45,49,55,.43) 24%,rgba(14,18,24,.68) 76%,rgba(200,164,125,.13));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 18px rgba(255,255,255,.025),0 12px 30px rgba(0,0,0,.28);
+  backdrop-filter: blur(22px) saturate(120%);
+  -webkit-backdrop-filter: blur(22px) saturate(120%);
+}
+body.theme-obsidian .sidebar .frame.collapsed { padding: 30px 12px 8px; }
+body.theme-obsidian .sidebar .frame-title {
+  position: absolute;
+  top: 11px;
+  left: 14px;
+  transform: none;
+  padding: 0;
+  background: transparent !important;
+  font: 600 11px/1.4 var(--font);
+  letter-spacing: .12em;
+  color: #edc996;
+  text-transform: uppercase;
+}
+body.theme-obsidian .sidebar .frame-toggle {
+  background: transparent !important;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+}
+body.theme-obsidian .sidebar .frame-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 21px;
+  width: 45px;
+  height: 1px;
+  background: linear-gradient(90deg,rgba(231,186,131,.65),transparent);
+}
+body.theme-obsidian .sidebar .frame :is(.mapbox,.compassbox,.gauges) {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+body.theme-obsidian .sidebar .frame[data-panel="map"] .mapbox {
+  border-radius: 11px !important;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center,rgba(65,72,79,.27),rgba(7,10,15,.48));
+  border: 1px solid rgba(225,221,215,.12);
+}
+body.theme-obsidian .sidebar .frame[data-panel="map"] .mapbox img {
+  border-radius: 8px !important;
+}
+body.theme-obsidian .sidebar .frame[data-panel="exits"] .compassbox {
+  min-height: 100px;
+}
+body.theme-obsidian .sidebar .frame[data-panel="vitals"] .gauges {
+  padding: 2px 8px;
+}
+body.theme-obsidian .sidebar .frame[data-panel="vitals"] .gauge .track {
+  height: 66px;
+  width: 17px;
+  background: rgba(3,7,11,.55);
+}
+body.theme-obsidian .sidebar .frame[data-panel="vitals"] .glabel,
+body.theme-obsidian .sidebar .frame[data-panel="vitals"] .gval {
+  font-family: var(--font);
+  letter-spacing: .03em;
+}
+body.theme-obsidian .sidebar .sidebartabs {
+  border: 1px solid rgba(239,229,216,.38);
+  border-radius: 16px !important;
+  padding: 10px;
+  background: linear-gradient(140deg,rgba(214,206,194,.17),rgba(17,21,27,.67) 55%,rgba(149,116,83,.11));
+  box-shadow: inset 0 1px rgba(255,255,255,.3),0 12px 30px rgba(0,0,0,.25);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+body.theme-obsidian .sidebar .sidebartabs .strip {
+  border: 0;
+  background: rgba(5,9,14,.28);
+  padding: 3px;
+  border-radius: 10px !important;
+}
+body.theme-obsidian .sidebar .sidebartabs .tab.on {
+  border: 1px solid rgba(226,182,131,.45);
+  background: linear-gradient(155deg,rgba(223,183,131,.31),rgba(102,75,49,.28));
+  box-shadow: inset 0 1px rgba(255,255,255,.16);
+}
+body.theme-obsidian .sidebar .sidebartabs .content {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+body.theme-obsidian .output {
+  background: linear-gradient(135deg,rgba(9,12,16,.88),rgba(8,11,15,.76));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+body.theme-obsidian .game .body { align-items: stretch; }
+@media (max-width:899px) {
+  body.theme-obsidian .sidebar .frame { padding: 31px 8px 8px; }
+  body.theme-obsidian .sidebar .sidebartabs { padding: 6px; }
+}
