@@ -28,10 +28,13 @@ local position=1
 local waiting=false
 local last=0
 local watchdog=nil
+local recovery=nil
+local weapon=nil
 local function emit(command)
  if live then send(command) else log("[TEC fight preview] "..command) end
 end
 local function advance()
+ if recovery then return end
  if not active or waiting or #moves==0 then return end
  -- Guard against duplicate readiness messages.
  if last>0 and time.since(last)<750 then return end
@@ -52,6 +55,18 @@ local function advance()
 end
 local function ready()
  if not active then return end
+ if recovery then
+   if recovery=="wield" then
+     recovery="await_wield"
+     emit("wield "..weapon)
+     last=time.now()
+   elseif recovery=="take" then
+     recovery="await_take"
+     emit("take "..weapon)
+     last=time.now()
+   end
+   return
+ end
  if watchdog then clear_timer(watchdog); watchdog=nil end
  waiting=false
  advance()
@@ -67,6 +82,8 @@ function M.on_start(args)
  moves={}
  for move in sequence:gmatch("[^,]+") do moves[#moves+1]=move end
  position=1
+ weapon=(name:find("falx") and "falx") or (name:find("dual") and "dagger") or (name:find("dax") and "axe") or (name=="warhammer" and "warhammer")
+ recovery=nil
  waiting=false
  last=0
  live=(args[2] or ""):lower()=="live"
@@ -78,11 +95,43 @@ function M.on_start(args)
 end
 function M.on_stop()
  active=false
+ recovery=nil
  waiting=false
  if watchdog then clear_timer(watchdog); watchdog=nil end
  log("[TEC fight] Stopped")
 end
+local function disarmed()
+ if not active or recovery then return end
+ recovery="wield"
+ waiting=false
+ if watchdog then clear_timer(watchdog); watchdog=nil end
+ log("[TEC fight] Disarmed: holding rotation until "..weapon.." is wielded")
+ -- A readiness message is not required to attempt recovery.
+ emit("wield "..weapon)
+ recovery="await_wield"
+end
+local function dropped()
+ if not active then return end
+ recovery="await_take"
+ waiting=false
+ if watchdog then clear_timer(watchdog); watchdog=nil end
+ emit("take "..weapon)
+end
+local function wielded()
+ if not active or recovery~="await_wield" then return end
+ recovery=nil
+ waiting=false
+ last=0
+ log("[TEC fight] Weapon rearmed; resuming rotation")
+ advance()
+end
 M.reactions={
+ {match={"knocking it out of your grip","lose your grip on","losing your grip on","loosens your grip on","You must be wielding a weapon"},action=disarmed},
+ {match={"You fumble! You drop","You fumble, dropping","flinging away your weapon"},action=dropped},
+ {match="You take",condition=function() return active and recovery=="await_take" end,action=function(text)
+   if text:lower():find(weapon,1,true) then recovery="await_wield"; emit("wield "..weapon) end
+ end},
+ {match={"You wield","You are already wielding"},action=wielded},
  {match="You are no longer busy.",action=ready},
  {match="You must be standing",action=function()
    if active then
