@@ -28,9 +28,17 @@
   const crtScanlines = $derived(store.config?.UI?.CRTScanlines ?? true);
   const crtRoll = $derived(store.config?.UI?.CRTRoll ?? true);
   const crtBloom = $derived(store.config?.UI?.CRTBloom ?? true);
+  // Liquid Glass suppresses all CRT layers without changing saved preferences.
+  let glassTheme = $state(false);
+  onMount(() => {
+    const syncTheme = () => { glassTheme = document.body.classList.contains("theme-obsidian"); };
+    syncTheme();
+    window.addEventListener("praetor-theme-change", syncTheme);
+    return () => window.removeEventListener("praetor-theme-change", syncTheme);
+  });
   $effect(() => {
-    document.body.classList.toggle("crt-scanlines", crtScanlines);
-    document.body.classList.toggle("crt-bloom", crtBloom);
+    document.body.classList.toggle("crt-scanlines", crtScanlines && !glassTheme);
+    document.body.classList.toggle("crt-bloom", crtBloom && !glassTheme);
   });
 
   function applySystem(update: SystemUpdate) {
@@ -196,7 +204,7 @@
 <Toasts />
 <ContextMenu />
 
-{#if crtRoll}
+{#if crtRoll && !glassTheme}
   <div class="crt-roll"></div>
 {/if}
 
