@@ -68,6 +68,7 @@
     {#each bars as b (b.label)}
       <button class="bar" title="{b.tip} — click to check condition" onclick={checkCond} tabindex="-1" disabled={!store.transportReady}>
         <span class="lbl">{b.label}</span>
+        <span class="glass-meter" aria-hidden="true"><span class="glass-meter-fill" style:width="{Math.max(0, Math.min(100, b.value ?? 0))}%;background:{vitalColor(b.value)}"></span></span>
         <span class="bracket">[</span><span class="filled"
           style="color:{vitalColor(b.value)}">{block(filledCount(b.value))}</span><span
           class="empty">{dots(WIDTH - filledCount(b.value))}</span><span class="bracket">]</span>
