@@ -1,19 +1,21 @@
 <script lang="ts">
   import { store } from "../lib/store.svelte";
   import { onMount } from "svelte";
+  import * as api from "../lib/bridge";
 
   let smokeEnabled = $state(false);
   onMount(() => {
     smokeEnabled = localStorage.getItem("praetor.theme") === "obsidian-smoke";
     document.body.classList.toggle("theme-obsidian", smokeEnabled);
+    window.dispatchEvent(new Event("praetor-theme-change"));
     return () => document.body.classList.remove("theme-obsidian");
   });
   function toggleSmoke() {
     smokeEnabled = !smokeEnabled;
     document.body.classList.toggle("theme-obsidian", smokeEnabled);
+    window.dispatchEvent(new Event("praetor-theme-change"));
     localStorage.setItem("praetor.theme", smokeEnabled ? "obsidian-smoke" : "classic");
   }
-  import * as api from "../lib/bridge";
 
   const tabs = $derived(store.tabs.filter((t) => t.visible));
   const hideOnMobile = $derived(
@@ -40,7 +42,7 @@
     </button>
   {/each}
   <div class="spacer"></div>
-  <button class="tab theme-toggle" aria-pressed={smokeEnabled} title="Toggle Obsidian Smoke appearance" onclick={toggleSmoke} tabindex="-1">{smokeEnabled ? "◆ Smoke" : "◇ Smoke"}</button>
+  <button class="tab theme-toggle" aria-pressed={smokeEnabled} title="Toggle Liquid Glass appearance" onclick={toggleSmoke} tabindex="-1">{smokeEnabled ? "◆ Glass" : "◇ Glass"}</button>
   <button class="tab menu-btn" title="Menu (Esc)" onclick={() => (store.openModal = "menu")} tabindex="-1">☰</button>
 </div>
 
